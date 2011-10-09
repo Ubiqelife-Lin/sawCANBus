@@ -1,0 +1,4 @@
+
+set( sawCANBus_INCLUDE_DIR "@sawCANBus_INCLUDE_DIR@" )
+set( sawCANBus_LIBRARY_DIR "@sawCANBus_LIBRARY_DIR@" )
+set( sawCANBus_LIBRARIES   "@sawCANBus_LIBRARIES@" )
