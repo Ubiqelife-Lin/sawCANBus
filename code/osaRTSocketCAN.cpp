@@ -186,7 +186,7 @@ osaCANBus::Errno osaRTSocketCAN::Recv(osaCANBusFrame& canframe, osaCANBus::Flags
 
   // create a osaCANBusFrame
   canframe = osaCANBusFrame( frame.can_id, frame.data, frame.can_dlc );
-
+  //std::cout << "RECV: " << std::endl << canframe << std::endl;
 #endif
 
   return ESUCCESS;
@@ -196,13 +196,17 @@ osaCANBus::Errno osaRTSocketCAN::AddFilter( const osaCANBus::Filter& filter ){
 
 #if (CISST_OS == CISST_LINUX_XENOMAI )
 
+  //std::cout << "osaRTSocketCAN::AddFilter" << std::endl;
+
   if( filterscnt < osaRTSocketCAN::MAX_NUM_FILTERS ){
 
+    /*
     // Avoid duplicates
     for( size_t i=0; i<filterscnt; i++ ){
       if( filters[i].can_mask == filter.mask && filters[i].can_id == filter.id )
 	{ return osaCANBus::ESUCCESS; }
     }
+    */
 
     filters[filterscnt].can_mask = filter.mask;
     filters[filterscnt].can_id   = filter.id;
