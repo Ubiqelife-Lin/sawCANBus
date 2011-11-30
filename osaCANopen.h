@@ -2,11 +2,11 @@
 #ifndef _osaCANopen_h
 #define _osaCANopen_h
 
-#include <cisstCAN/cisstCAN.h>
-#include <cisstCAN/cisstCANFrame.h>
-#include <cisstCAN/CiA301.h>
-#include <cisstCAN/CiA402.h>
-#include <cisstCAN/cisstCANExport.h>
+#include <sawCANBus/osaCANBus.h>
+#include <sawCANBus/osaCANBusFrame.h>
+#include <sawCANBus/CiA301.h>
+#include <sawCANBus/CiA402.h>
+#include <sawCANBus/sawCANBusExport.h>
 
 class CISST_EXPORT osaCANopen {
 
@@ -21,17 +21,17 @@ class CISST_EXPORT osaCANopen {
  private:
    
    //! This is the CAN device used to implement the CANopen protocol
-   cisstCAN* candevice;
+   osaCANBus* candevice;
    bool deviceopened;
    
-   devCAN::Frame Pack( CiA301::COBID cobid, const CiA301::Object& object );
-   void Unpack( const cisstCANFrame& frame, 
+   osaCANBusFrame Pack( CiA301::COBID cobid, const CiA301::Object& object );
+   void Unpack( const osaCANBusFrame& frame, 
 		CiA301::COBID& cobid,
 		CiA301::Object& object );
    
  public:
    
-   osaCANopen( cisstCAN* can );
+   osaCANopen( osaCANBus* can );
    ~osaCANopen();
    
    osaCANopen::Errno Open( void );

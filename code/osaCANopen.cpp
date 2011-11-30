@@ -1,5 +1,5 @@
 
-#include <cisstCAN/osaCANopen.h>
+#include <sawCANBus/osaCANopen.h>
 
 #include <cisstCommon.h>
 #include <cisstOSAbstraction/osaGetTime.h>
@@ -7,7 +7,7 @@
 
 #include <fcntl.h>
 
-osaCANopen::osaCANopen( osaCAN* candevice ) : 
+osaCANopen::osaCANopen( osaCANBus* candevice ) : 
   candevice( candevice ), 
   deviceopened( false ){}
 
@@ -21,7 +21,7 @@ osaCANopen::Errno osaCANopen::Open(void){
     return osaCANopen::EFAILURE;
   }
   
-  if( candevice->Open() != osaCAN::ESUCCESS ){
+  if( candevice->Open() != osaCANBus::ESUCCESS ){
     CMN_LOG_RUN_ERROR << "Failed to open CAN device." << std::endl;
     return osaCANopen::EFAILURE;
   }
@@ -36,7 +36,7 @@ osaCANopen::Errno osaCANopen::Close(void){
     return osaCANopen::EFAILURE;
   }
   
-  if( candevice->Close() != osaCAN::ESUCCESS ){
+  if( candevice->Close() != osaCANBus::ESUCCESS ){
     CMN_LOG_INIT_ERROR << "Failed to close CAN device." << std::endl;
     return osaCANopen::EFAILURE;
   }
@@ -54,8 +54,8 @@ osaCANopen::Errno osaCANopen::Read( CiA301::COBID& cobid,
     return osaCANopen::EFAILURE;
   }
 
-  osaCAN::Frame frame;
-  if( candevice->Recv( frame ) != osaCAN::ESUCCESS ){
+  osaCANBusFrame frame;
+  if( candevice->Recv( frame ) != osaCANBus::ESUCCESS ){
     CMN_LOG_INIT_ERROR << "Failed to read CAN frame." << std::endl;
     return osaCANopen::EFAILURE;
   }
@@ -73,7 +73,7 @@ osaCANopen::Errno osaCANopen::Write( CiA301::COBID cobid,
      return osaCANopen::EFAILURE;
    }
 
-   if( candevice->Send( Pack( cobid, object ) ) != osaCAN::ESUCCESS ){
+   if( candevice->Send( Pack( cobid, object ) ) != osaCANBus::ESUCCESS ){
      CMN_LOG_INIT_ERROR << "Failed to write CAN frame." << std::endl;
      return osaCANopen::EFAILURE;
    }
@@ -83,17 +83,17 @@ osaCANopen::Errno osaCANopen::Write( CiA301::COBID cobid,
 
 // Pack
 // 
-osaCAN::Frame osaCANopen::Pack( CiA301::COBID cobid,
+osaCANBusFrame osaCANopen::Pack( CiA301::COBID cobid,
 				const CiA301::Object& object )
-{ return osaCAN::Frame( cobid, object.data ); }
+{ return osaCANBusFrame( cobid, object.data ); }
 
 // Unpack
 // 
-void osaCANopen::Unpack( const osaCAN::Frame& frame,
+void osaCANopen::Unpack( const osaCANBusFrame& frame,
 			 CiA301::COBID& cobid,
 			 CiA301::Object& object ){
 
-   const osaCAN::Frame::Data* src = frame.GetData();
+   const osaCANBusFrame::Data* src = frame.GetData();
    CiA301::Object::DataField dest( frame.GetLength() );
   
   for( size_t i=0; i<frame.GetLength(); i++ )

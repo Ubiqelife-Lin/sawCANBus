@@ -15,7 +15,7 @@ if( cisst_FOUND_AS_REQUIRED )
   # load cisst configuration
   include( ${CISST_USE_FILE} )
 
-  if( sawCANBus_FOUND )
+  if( sawCANBus_FOUND AND CISST_HAS_LINUX_XENOMAI)
     add_executable( osaRTSocketCANRecvExample     osaRTSocketCANRecvExample.cpp )
     add_executable( osaRTSocketCANSendExample     osaRTSocketCANSendExample.cpp )
     add_executable( mtsRTSocketCANSendRecvExample mtsRTSocketCANSendRecvExample.cpp )
@@ -28,9 +28,6 @@ if( cisst_FOUND_AS_REQUIRED )
     cisst_target_link_libraries( osaRTSocketCANSendExample ${REQUIRED_CISST_LIBRARIES} )
     cisst_target_link_libraries( mtsRTSocketCANSendRecvExample ${REQUIRED_CISST_LIBRARIES} )
 
-  endif( sawCANBus_FOUND )
-  
-  
-
+  endif( sawCANBus_FOUND AND CISST_HAS_LINUX_XENOMAI)
 
 endif( cisst_FOUND_AS_REQUIRED )

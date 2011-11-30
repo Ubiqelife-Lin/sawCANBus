@@ -1,5 +1,5 @@
 
-#include <cisstCAN/osaBitCtrl.h>
+#include <sawCANBus/osaBitCtrl.h>
 #include <cisstCommon/cmnLogger.h>
 #include <cisstOSAbstraction/osaSleep.h>
 
@@ -8,22 +8,22 @@
 
 CMN_IMPLEMENT_SERVICES( osaBitCtrl );
 
-osaBitCtrl::osaBitCtrl( const std::string& candevname, cisstCAN::Rate rate ) : 
-  cisstCAN( rate ),
+osaBitCtrl::osaBitCtrl( const std::string& candevname, osaCANBus::Rate rate ) : 
+  osaCANBus( rate ),
   candevname( candevname ),
   canfd( -1 ){}
 
 osaBitCtrl::~osaBitCtrl(){
   
   // ensure the device is closed
-  if( Close() == cisstCAN::EFAILURE ){
+  if( Close() == osaCANBus::EFAILURE ){
     CMN_LOG_RUN_ERROR << " Failed to close device " << candevname
 		      << std::endl;
   }
   
 }
 
-cisstCAN::Errno osaBitCtrl::Open(){
+osaCANBus::Errno osaBitCtrl::Open(){
 
 #if (CISST_OS == CISST_QNX )
 
@@ -37,26 +37,26 @@ cisstCAN::Errno osaBitCtrl::Open(){
     if( IsClosed() ){
       CMN_LOG_INIT_ERROR << " Failed to open the CAN device " << candevname
 			 << std::endl;
-      return cisstCAN::EFAILURE;
+      return osaCANBus::EFAILURE;
     }
     
     // SL: duno what this is supposed to do
     ioctl( canfd, CNFLUSH );
-    return cisstCAN::ESUCCESS;
+    return osaCANBus::ESUCCESS;
     
   }
   
   else{
     CMN_LOG_RUN_ERROR << "The CAN device has already been opened?"
 		      << std::endl;
-    return cisstCAN::EFAILURE;
+    return osaCANBus::EFAILURE;
   }
 #endif
 
-  return cisstCAN::EFAILURE;
+  return osaCANBus::EFAILURE;
 }
 
-cisstCAN::Errno osaBitCtrl::Close(){
+osaCANBus::Errno osaBitCtrl::Close(){
   
 #if (CISST_OS == CISST_QNX )
 
@@ -67,20 +67,20 @@ cisstCAN::Errno osaBitCtrl::Close(){
     if( close( canfd ) == -1 ){
       CMN_LOG_RUN_ERROR << " Failed to close the device " << candevname 
 			<< std::endl;
-      return cisstCAN::EFAILURE;
+      return osaCANBus::EFAILURE;
     }
     // reset the file descriptor
     canfd = -1;
     
-    return cisstCAN::ESUCCESS;
+    return osaCANBus::ESUCCESS;
   }
 #endif
 
-  return cisstCAN::EFAILURE;
+  return osaCANBus::EFAILURE;
 
 }
 
-cisstCAN::Errno osaBitCtrl::Recv( cisstCAN::Frame& frame, cisstCAN::Flags ){
+osaCANBus::Errno osaBitCtrl::Recv( osaCANBusFrame& frame, osaCANBus::Flags ){
 
 #if (CISST_OS == CISST_QNX )
 
@@ -100,28 +100,28 @@ cisstCAN::Errno osaBitCtrl::Recv( cisstCAN::Frame& frame, cisstCAN::Flags ){
       CMN_LOG_RUN_ERROR << " Expected to read " << sizeof( canmsg_t ) << " bytes."
 			<< " Got " << nbytesread
 			<< std::endl;
-      return cisstCAN::EFAILURE;	
+      return osaCANBus::EFAILURE;	
     }
     
     // build and return a CAN frame
-    frame = cisstCAN::Frame( canmsg.id, canmsg.data, canmsg.length );
-    return cisstCAN::ESUCCESS;
+    frame = osaCANBusFrame( canmsg.id, canmsg.data, canmsg.length );
+    return osaCANBus::ESUCCESS;
     
   }
 
   else{
     CMN_LOG_RUN_ERROR << "Invalid file descriptor. Is the CAN deviced opened?"
 		      << std::endl;
-    return cisstCAN::EFAILURE;
+    return osaCANBus::EFAILURE;
   }
 
 #endif
 
-  return cisstCAN::EFAILURE;
+  return osaCANBus::EFAILURE;
   
 }
 
-cisstCAN::Errno osaBitCtrl::Send( const cisstCAN::Frame& frame, cisstCAN::Flags ){
+osaCANBus::Errno osaBitCtrl::Send( const osaCANBusFrame& frame, osaCANBus::Flags ){
   
 #if (CISST_OS == CISST_QNX )
 
@@ -135,8 +135,8 @@ cisstCAN::Errno osaBitCtrl::Send( const cisstCAN::Frame& frame, cisstCAN::Flags 
     canmsg.flags = 0;
     canmsg.id = frame.GetID();
     canmsg.length = frame.GetLength();
-    const cisstCAN::Frame::Data* data = frame.GetData();
-    for( cisstCAN::Frame::DataLength i=0; i<frame.GetLength(); i++ )
+    const osaCANBusFrame::Data* data = frame.GetData();
+    for( osaCANBusFrame::DataLength i=0; i<frame.GetLength(); i++ )
       { canmsg.data[i] = data[i]; }
     
     // write the message
@@ -148,22 +148,22 @@ cisstCAN::Errno osaBitCtrl::Send( const cisstCAN::Frame& frame, cisstCAN::Flags 
       CMN_LOG_RUN_ERROR << " Expected to write " << sizeof( canmsg_t ) << " bytes."
 			<< " Wrote " << nbyteswrite
 			<< std::endl;
-      return cisstCAN::EFAILURE;	
+      return osaCANBus::EFAILURE;	
     }
     
-    return cisstCAN::ESUCCESS;
+    return osaCANBus::ESUCCESS;
     
   }
   
   else{
     CMN_LOG_RUN_ERROR << "Invalid file descriptor. Is the CAN deviced opened?"
 		      << std::endl;
-    return cisstCAN::EFAILURE;
+    return osaCANBus::EFAILURE;
   } 
 
 #endif
 
-  return cisstCAN::EFAILURE;
+  return osaCANBus::EFAILURE;
   
 }
 

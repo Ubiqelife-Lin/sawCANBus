@@ -3,8 +3,8 @@
 #ifndef _osaBitCtrl_h
 #define _osaBitCtrl_h
 
-#include <cisstCAN/cisstCAN.h>
-#include <cisstCAN/cisstCANExport.h>
+#include <sawCANBus/osaCANBus.h>
+#include <sawCANBus/sawCANBusExport.h>
 
 //! A BitCtrl CAN device
 /**
@@ -12,7 +12,7 @@
    driver since it only provides an API and uses ISO C read/write.
 */
 
-class CISST_EXPORT osaBitCtrl : public cisstCAN {
+class CISST_EXPORT osaBitCtrl : public osaCANBus {
   
   CMN_DECLARE_SERVICES(CMN_NO_DYNAMIC_CREATION, CMN_LOG_LOD_RUN_ERROR);
 
@@ -27,20 +27,20 @@ class CISST_EXPORT osaBitCtrl : public cisstCAN {
  public:
   
   
-  osaBitCtrl( const std::string& candevname, cisstCAN::Rate rate );
+  osaBitCtrl( const std::string& candevname, osaCANBus::Rate rate );
   ~osaBitCtrl();
   
-  cisstCAN::Errno Open();
-  cisstCAN::Errno Close();
+  osaCANBus::Errno Open();
+  osaCANBus::Errno Close();
   
-  cisstCAN::Errno Send( const cisstCANFrame& frame, 
-			cisstCAN::Flags flags = cisstCAN::MSG_NOFLAG );
+  osaCANBus::Errno Send( const osaCANBusFrame& frame, 
+			osaCANBus::Flags flags = osaCANBus::MSG_NOFLAG );
   
-  cisstCAN::Errno Recv( cisstCANFrame& frame, 
-			cisstCAN::Flags flags = cisstCAN::MSG_NOFLAG );
+  osaCANBus::Errno Recv( osaCANBusFrame& frame, 
+			osaCANBus::Flags flags = osaCANBus::MSG_NOFLAG );
   
-  cisstCAN::Errno AddFilter( const cisstCAN::Filter& ) 
-    { return cisstCAN::ESUCCESS; }
+  osaCANBus::Errno AddFilter( const osaCANBus::Filter& ) 
+    { return osaCANBus::ESUCCESS; }
   
   
 };
