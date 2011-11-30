@@ -62,8 +62,8 @@ if( cisst_FOUND_AS_REQUIRED )
     set( 
       SOURCE_FILES 
       ${SOURCE_FILES} 
-      ../osaCANopen.cpp 
-      ../osaBitCtrl.cpp )
+      osaCANopen.cpp 
+      osaBitCtrl.cpp )
     
     include_directories( ${BITCTRL_INCLUDE_DIR} )
     
