@@ -2,7 +2,7 @@
 #ifndef _CiA301_h
 #define _CiA301_h
 
-#include <osaCANBus.h>
+#include "osaCANBus.h"
 
 namespace CiA301{
    
