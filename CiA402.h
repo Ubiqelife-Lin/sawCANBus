@@ -2,7 +2,7 @@
 #ifndef _CiA402_h
 #define _CiA402_h
 
-#include <cisstDevices/can/CiA301.h>
+#include <CiA301.h>
 
 namespace CiA402{
    

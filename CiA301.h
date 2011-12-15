@@ -2,7 +2,7 @@
 #ifndef _CiA301_h
 #define _CiA301_h
 
-#include <cisstDevices/can/devCAN.h>
+#include <osaCANBus.h>
 
 namespace CiA301{
    
