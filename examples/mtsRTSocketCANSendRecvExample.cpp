@@ -95,8 +95,8 @@ int main( int argc, char** argv ){
   cmnLogger::SetMaskFunction( CMN_LOG_ALLOW_ALL );
   cmnLogger::SetMaskDefaultLog( CMN_LOG_ALLOW_ALL );
 
-  if( argc !=2 && argc != 3 ){
-    std::cerr << "Usage: " << argv[0] << " rtcan[?] GCMIP" << std::endl;
+  if( argc !=2 ){
+    std::cerr << "Usage: " << argv[0] << " rtcan[?]" << std::endl;
     return -1;
   }
 
