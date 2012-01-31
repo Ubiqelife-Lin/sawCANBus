@@ -126,10 +126,11 @@ int main( int argc, char** argv ){
   taskManager->StartAll();
 
   // Wait to exit
+  std::cout << "ENTER to exit" << std::endl;
   cmnGetChar();
 
-  taskManager->KillAll();
-  taskManager->Cleanup();
+  //taskManager->KillAll();
+  //taskManager->Cleanup();
 
   return 0;
 }
