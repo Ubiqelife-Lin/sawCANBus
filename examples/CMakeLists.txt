@@ -8,12 +8,13 @@ set(
   cisstMultiTask )
 
 find_package( cisst REQUIRED ${REQUIRED_CISST_LIBRARIES} )
-find_package( sawCANBus REQUIRED HINTS "${cisst_saw_BINARY_DIR}/saw/components")
 
 if( cisst_FOUND_AS_REQUIRED )
 
   # load cisst configuration
   include( ${CISST_USE_FILE} )
+
+  cisst_find_component( sawCANBus REQUIRED)
 
   if( sawCANBus_FOUND AND CISST_HAS_LINUX_XENOMAI)
 

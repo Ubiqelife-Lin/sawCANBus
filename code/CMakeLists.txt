@@ -90,4 +90,17 @@ if( cisst_FOUND_AS_REQUIRED )
     "${sawComponents_BINARY_DIR}/sawCANBusConfig.cmake"
     @ONLY@ )
 
+  # Install targets for headers and library
+  install( FILES ${HEADER_FILES}
+    DESTINATION include/sawCANBus)
+
+  install( TARGETS sawCANBus
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+
+  install( FILES "${sawComponents_BINARY_DIR}/sawCANBusConfig.cmake"
+    DESTINATION ${CISST_CMAKE_MODULES_INSTALL_SUFFIX}/components)
+
+
 endif( cisst_FOUND_AS_REQUIRED )
