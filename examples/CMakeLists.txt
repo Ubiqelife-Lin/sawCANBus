@@ -1,7 +1,19 @@
+#
+# $Id$
+#
+# (C) Copyright 2011-2012 Johns Hopkins University (JHU), All Rights
+# Reserved.
+#
+# --- begin cisst license - do not edit ---
+#
+# This software is provided "as is" under an open source license, with
+# no warranty.  The complete license can be found in license.txt and
+# http://www.cisst.org/cisst/license.txt.
+#
+# --- end cisst license ---
 
-
-set( 
-  REQUIRED_CISST_LIBRARIES 
+set(
+  REQUIRED_CISST_LIBRARIES
   cisstCommon
   cisstVector
   cisstOSAbstraction
@@ -14,7 +26,7 @@ if( cisst_FOUND_AS_REQUIRED )
   # load cisst configuration
   include( ${CISST_USE_FILE} )
 
-  cisst_find_component( sawCANBus REQUIRED)
+  cisst_find_saw_component( sawCANBus REQUIRED)
 
   if( sawCANBus_FOUND AND CISST_HAS_LINUX_XENOMAI)
 
