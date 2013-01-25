@@ -39,7 +39,29 @@ namespace CiA402 {
     };
 
     struct OperationMode : public CiA301::SDO {
-        enum Mode
+        enum Mode,
+            END_HOMING       = 0x0F,
+            RESET_FAULT_ALT  = 0x00
+        };
+        ControlWord( CiA402::ControlWord::Word word ) :
+            CiA301::SDO( CiA301::SDO::INITIATE_WRITE, 0x6040, 0, word ){}
+    };
+
+    struct StatusWord : public CiA301::SDO {
+        enum Word
+        {
+            NOT_READY_TO_SWITCH_ON = 0,
+            SWITCH_ON_DISABLED     = 1,
+            READY_TO_SWITCH_ON     = 2,
+            OPERATION_DISABLED     = 3,
+            OPERATION_ENABLED      = 4,
+            QUICK_STOP_ACTIVE      = 5,
+            FAULT                  = 6
+        };
+        StatusWord() :
+            CiA301::SDO( CiA301::SDO::INITIATE_READ, 0x6041, 0, 0 ){}
+    };
+
         {	
             IDLE     = 0,
             POSITION = 1,

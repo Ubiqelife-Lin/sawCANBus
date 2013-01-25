@@ -130,48 +130,49 @@ namespace CiA301{
       };
   }
   
-  struct SDO : public Object{
+  struct SDO : public Object {
 
-    typedef unsigned short   Index; // 2 bytes
-    typedef unsigned char SubIndex; // 1 byte
-    typedef int               Data; // 4 bytes
+      typedef unsigned short   Index; // 2 bytes
+      typedef unsigned char SubIndex; // 1 byte
+      typedef int               Data; // 4 bytes
 
-    static const CiA301::COBID TRANSMIT      = 0x580;
-    static const CiA301::COBID TRANSMIT_LOW  = 0x581;
-    static const CiA301::COBID TRANSMIT_HIGH = 0x5FF;
+      // SDO WRITE
+      static const CiA301::COBID TRANSMIT      = 0x580;
+      static const CiA301::COBID TRANSMIT_LOW  = 0x581;
+      static const CiA301::COBID TRANSMIT_HIGH = 0x5FF;
+      // SDO READ
+      static const CiA301::COBID RECEIVE       = 0x600;
+      static const CiA301::COBID RECEIVE_LOW   = 0x601;
+      static const CiA301::COBID RECEIVE_HIGH  = 0x680;
 
-    static const CiA301::COBID RECEIVE       = 0x600;
-    static const CiA301::COBID RECEIVE_LOW   = 0x601;
-    static const CiA301::COBID RECEIVE_HIGH  = 0x680;
-     
-    enum Command
+      enum Command
       {
-	INITIATE_READ  = 0x40,
-	INITIATE_WRITE = 0x22
+          INITIATE_READ  = 0x40,
+          INITIATE_WRITE = 0x22
       };
-   
-     SDO( CiA301::SDO::Command   command,
-	  CiA301::SDO::Index       index,
-	  CiA301::SDO::SubIndex subindex ) : 
-       Object( CiA301::Object::DataField( 8, 
-					  command, 
-					  (index>>0) & 0xFF, 
-					  (index>>8) & 0xFF,
-					  subindex,
-					  0x00, 0x00, 0x00, 0x00 ) ){}
-     SDO( CiA301::SDO::Command   command,
-	  CiA301::SDO::Index       index,
-	  CiA301::SDO::SubIndex subindex,
-	  CiA301::SDO::Data         data ) : 
-       Object( CiA301::Object::DataField( 8, 
-					  command, 
-					  (index>>0) & 0xFF, 
-					  (index>>8) & 0xFF,
-					  subindex,
-					  (data>> 0) & 0xFF,
-					  (data>> 8) & 0xFF,
-					  (data>>16) & 0xFF,
-					  (data>>24) & 0xFF ) ){}
+
+      SDO(CiA301::SDO::Command   command,
+          CiA301::SDO::Index       index,
+          CiA301::SDO::SubIndex subindex) :
+          Object(CiA301::Object::DataField(8, 
+                                           command, 
+                                           (index>>0) & 0xFF, 
+                                           (index>>8) & 0xFF,
+                                           subindex,
+                                           0x00, 0x00, 0x00, 0x00)) {}
+      SDO(CiA301::SDO::Command   command,
+          CiA301::SDO::Index       index,
+          CiA301::SDO::SubIndex subindex,
+          CiA301::SDO::Data         data) : 
+          Object(CiA301::Object::DataField(8, 
+                                           command, 
+                                           (index>>0) & 0xFF, 
+                                           (index>>8) & 0xFF,
+                                           subindex,
+                                           (data>> 0) & 0xFF,
+                                           (data>> 8) & 0xFF,
+                                           (data>>16) & 0xFF,
+                                           (data>>24) & 0xFF)) {}
   };
    
    struct RPDO2 : public CiA301::SDO {
