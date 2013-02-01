@@ -48,46 +48,46 @@ namespace CiA301{
       SYNC() : Object(){}	   
    };
 
-   struct NMT : public CiA301::Object{
-      
-      static const CiA301::COBID COBID = 0x000;
-      
-      enum State
-	{
-	   OPERATIONAL         = 0x01,
-	   STOPPED             = 0x02,
-	   PRE_OPERATIONAL     = 0x80,
-	   RESET_NODE          = 0x81,
-	   RESET_COMMUNICATION = 0x82
-	};
-      NMT( CiA301::NMT::State state, CiA301::Node::ID nodeid ) :
-	Object( DataField( 2, state, nodeid ) ){}
-   };   
-   
-   struct NMTOperational : public CiA301::NMT {
-      NMTOperational( CiA301::Node::ID nodeid ):
-	NMT( CiA301::NMT::OPERATIONAL, nodeid ){}
-   };
-   
-   struct NMTStop : public CiA301::NMT {
-      NMTStop( CiA301::Node::ID nodeid ): 
-	NMT( CiA301::NMT::STOPPED, nodeid ){}
-   };
-   
-   struct NMTPreOperational : public CiA301::NMT {
-      NMTPreOperational( CiA301::Node::ID nodeid ): 
-	NMT( CiA301::NMT::PRE_OPERATIONAL, nodeid ){}
-   };
-   
-   struct NMTResetNode : public CiA301::NMT {
-      NMTResetNode( CiA301::Node::ID nodeid ): 
-	NMT( CiA301::NMT::RESET_NODE, nodeid ){}
-   };
-   
-   struct NMTResetCommunication : public CiA301::NMT {
-      NMTResetCommunication( CiA301::Node::ID nodeid ):
-	NMT( CiA301::NMT::RESET_COMMUNICATION, nodeid ){}
-   };
+    struct NMT : public CiA301::Object
+    {
+        static const CiA301::COBID COBID = 0x000;
+
+        enum State {
+            OPERATIONAL         = 0x01,
+            STOPPED             = 0x02,
+            PRE_OPERATIONAL     = 0x80,
+            RESET_NODE          = 0x81,
+            RESET_COMMUNICATION = 0x82
+        };
+
+        NMT(CiA301::NMT::State state, CiA301::Node::ID nodeid) :
+            Object(DataField(2, state, nodeid)) {}
+    };   
+
+    struct NMTOperational : public CiA301::NMT {
+        NMTOperational( CiA301::Node::ID nodeid ):
+            NMT( CiA301::NMT::OPERATIONAL, nodeid ){}
+    };
+
+    struct NMTStop : public CiA301::NMT {
+        NMTStop( CiA301::Node::ID nodeid ): 
+            NMT( CiA301::NMT::STOPPED, nodeid ){}
+    };
+
+    struct NMTPreOperational : public CiA301::NMT {
+        NMTPreOperational( CiA301::Node::ID nodeid ): 
+            NMT( CiA301::NMT::PRE_OPERATIONAL, nodeid ){}
+    };
+
+    struct NMTResetNode : public CiA301::NMT {
+        NMTResetNode( CiA301::Node::ID nodeid ): 
+            NMT( CiA301::NMT::RESET_NODE, nodeid ){}
+    };
+
+    struct NMTResetCommunication : public CiA301::NMT {
+        NMTResetCommunication( CiA301::Node::ID nodeid ):
+            NMT( CiA301::NMT::RESET_COMMUNICATION, nodeid ){}
+    };
 
 
   namespace EMERGENCY
