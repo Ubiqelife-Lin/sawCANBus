@@ -136,14 +136,14 @@ namespace CiA301{
       typedef unsigned char SubIndex; // 1 byte
       typedef int               Data; // 4 bytes
 
-      // SDO WRITE
-      static const CiA301::COBID TRANSMIT      = 0x580;
-      static const CiA301::COBID TRANSMIT_LOW  = 0x581;
-      static const CiA301::COBID TRANSMIT_HIGH = 0x5FF;
-      // SDO READ
-      static const CiA301::COBID RECEIVE       = 0x600;
-      static const CiA301::COBID RECEIVE_LOW   = 0x601;
-      static const CiA301::COBID RECEIVE_HIGH  = 0x680;
+      // SDO response (node to host)
+      static const CiA301::COBID RESPONSE      = 0x580;
+      static const CiA301::COBID RESPONSE_LOW  = 0x581;
+      static const CiA301::COBID RESPONSE_HIGH = 0x5FF;
+      // SDO request (host to node)
+      static const CiA301::COBID REQUEST       = 0x600;
+      static const CiA301::COBID REQUEST_LOW   = 0x601;
+      static const CiA301::COBID REQUEST_HIGH  = 0x680;
 
       enum Command
       {

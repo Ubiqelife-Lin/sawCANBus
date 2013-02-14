@@ -9,6 +9,7 @@ namespace CiA402 {
     struct ControlWord : public CiA301::SDO {
         enum Word
         {
+            RESET_FAULT_ALT  = 0x00,
             RESET_FAULT      = 0x80,
             DISABLE_VOLTAGE  = 0x04,
             SHUTDOWN         = 0x06,
@@ -16,8 +17,7 @@ namespace CiA402 {
             ENABLE_OPERATION = 0x0F,
             QUICK_STOP       = 0x02,
             START_HOMING     = 0x1F,
-            END_HOMING       = 0x0F//,
-            //RESET_FAULT_ALT  = 0x00
+            END_HOMING       = 0x0F,
         };
         ControlWord( CiA402::ControlWord::Word word ) :
             CiA301::SDO( CiA301::SDO::INITIATE_WRITE, 0x6040, 0, word ){}
