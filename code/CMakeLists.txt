@@ -43,6 +43,14 @@ if( cisst_FOUND_AS_REQUIRED )
     mtsCANBus.cpp
     mtsCANBusFrame.cpp )
 
+  #Check for Socket CAN
+  find_package( SocketCAN )
+  if( SocketCANFound )
+    message('asfd')
+    set( HEADER_FILES ${HEADER_FILES} ../osaSocketCAN.h )
+    set( SOURCE_FILES ${SOURCE_FILES} osaSocketCAN.cpp )
+  endif( SocketCANFound )
+
   # Check for RT Socket CAN
   find_package( RTSocketCAN )
   if( RTSocketCANFound )
