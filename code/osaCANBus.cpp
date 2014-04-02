@@ -15,6 +15,7 @@ http://www.cisst.org/cisst/license.txt.
 --- end cisst license ---
 */
 
+//#include <sawCANBus/osaCANBus.h>
 #include <sawCANBus/osaCANBus.h>
 #include <cisstCommon/cmnLogger.h>
 

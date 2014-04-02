@@ -26,15 +26,23 @@ if( cisst_FOUND_AS_REQUIRED )
   set( sawCANBus_DEFINITIONS )
   set( sawCANBus_LIBRARIES )
 
+  # create/configure file for find_package (sawCANBus)
+  set(sawCANBus_INCLUDE_DIR "${sawCANBus_SOURCE_DIR}/include")
+  set( sawCANBus_LIBRARY_DIR "${LIBRARY_OUTPUT_PATH}" )
+  set( sawCANBus_LIBRARIES sawCANBus )
+
+  include_directories (${sawCANBus_INCLUDE_DIR})
+  set (sawCANBus_HEADER_DIR "${sawCANBus_INCLUDE_DIR}/sawCANBus")
+
   # load cisst configuration
   include( ${CISST_USE_FILE} )
 
   set(
     HEADER_FILES
-    ../osaCANBus.h
-    ../osaCANBusFrame.h
-    ../mtsCANBus.h
-    ../mtsCANBusFrame.h )
+    ${sawCANBus_HEADER_DIR}/osaCANBus.h
+    ${sawCANBus_HEADER_DIR}/osaCANBusFrame.h
+    ${sawCANBus_HEADER_DIR}/mtsCANBus.h
+    ${sawCANBus_HEADER_DIR}/mtsCANBusFrame.h )
 
   set(
     SOURCE_FILES
@@ -46,7 +54,7 @@ if( cisst_FOUND_AS_REQUIRED )
   #Check for Socket CAN
   find_package( SocketCAN )
   if( SocketCANFound )
-    set( HEADER_FILES ${HEADER_FILES} ../osaSocketCAN.h )
+    set( HEADER_FILES ${HEADER_FILES} ${sawCANBus_HEADER_DIR}/osaSocketCAN.h )
     set( SOURCE_FILES ${SOURCE_FILES} osaSocketCAN.cpp )
   endif( SocketCANFound )
 
@@ -57,8 +65,8 @@ if( cisst_FOUND_AS_REQUIRED )
     set(
       HEADER_FILES
       ${HEADER_FILES}
-      ../osaRTSocketCAN.h
-      ../mtsRTSocketCAN.h )
+      ${sawCANBus_HEADER_DIR}/osaRTSocketCAN.h
+      ${sawCANBus_HEADER_DIR}/mtsRTSocketCAN.h )
 
     set(
       SOURCE_FILES
@@ -79,10 +87,10 @@ if( cisst_FOUND_AS_REQUIRED )
     set(
       HEADER_FILES
       ${HEADER_FILES}
-      ../CiA301.h
-      ../CiA402.h
-      ../osaCANopen.h
-      ../osaBitCtrl.h )
+      ${sawCANBus_HEADER_DIR}/CiA301.h
+      ${sawCANBus_HEADER_DIR}/CiA402.h
+      ${sawCANBus_HEADER_DIR}/osaCANopen.h
+      ${sawCANBus_HEADER_DIR}/osaBitCtrl.h )
 
     set(
       SOURCE_FILES
@@ -100,10 +108,6 @@ if( cisst_FOUND_AS_REQUIRED )
   target_link_libraries( sawCANBus ${sawCANBus_LIBRARIES} )
   cisst_target_link_libraries( sawCANBus ${REQUIRED_CISST_LIBRARIES} )
 
-  # create/configure file for find_package (sawCANBus)
-  set(sawCANBus_INCLUDE_DIR "${sawComponents_SOURCE_DIR}" "${sawComponents_BINARY_DIR}")
-  set( sawCANBus_LIBRARY_DIR "${LIBRARY_OUTPUT_PATH}" )
-  set( sawCANBus_LIBRARIES sawCANBus )
 
   configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/sawCANBusConfig.cmake.in"
