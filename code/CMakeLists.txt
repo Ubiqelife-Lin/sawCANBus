@@ -107,7 +107,7 @@ if( cisst_FOUND_AS_REQUIRED )
 
   configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/sawCANBusConfig.cmake.in"
-    "${sawComponents_BINARY_DIR}/sawCANBusConfig.cmake"
+    "${sawCANBus_BINARY_DIR}/sawCANBusConfig.cmake"
     @ONLY@ )
 
   # Install targets for headers and library
