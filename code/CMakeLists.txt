@@ -27,7 +27,7 @@ if( cisst_FOUND_AS_REQUIRED )
   set( sawCANBus_LIBRARIES )
 
   # create/configure file for find_package (sawCANBus)
-  set(sawCANBus_INCLUDE_DIR "${sawCANBus_SOURCE_DIR}/include")
+  set( sawCANBus_INCLUDE_DIR "${sawCANBus_SOURCE_DIR}/include" )
   set( sawCANBus_LIBRARY_DIR "${LIBRARY_OUTPUT_PATH}" )
   set( sawCANBus_LIBRARIES sawCANBus )
 
@@ -73,6 +73,7 @@ if( cisst_FOUND_AS_REQUIRED )
       ${SOURCE_FILES}
       osaRTSocketCAN.cpp )
 
+    set( sawCANBus_HAS_RTSocketCAN ON)
     set( sawCANBus_LIBRARIES_PATH "${RTDM_LIBRARIES_PATH}" )
     set( sawCANBus_LIBRARIES "${RTDM_LIBRARIES}" )
     set( sawCANBus_DEFINITIONS "${RTDM_DEFINITIONS}" )
