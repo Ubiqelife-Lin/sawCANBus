@@ -5,11 +5,14 @@
 #include <cisstCommon/cmnGetChar.h>
 #include <cisstOSAbstraction/osaSleep.h>
 #include <sawCANBus/mtsCANBusFrame.h>
-#include <sawCANBus/mtsRTSocketCAN.h>
 
+#if (CISST_OS == CISST_LINUX_XENOMAI)
+#include <sawCANBus/mtsRTSocketCAN.h>
 #include <native/task.h>
 #include <sys/mman.h>
-
+#else
+#include <sawCANBus/mtsSocketCAN.h>
+#endif
 
 // A client CAN task that read/write from/to a mtsCAN component
 class CANclient : public mtsTaskContinuous{
@@ -86,17 +89,19 @@ public:
 
 int main( int argc, char** argv ){
 
+#if (CISST_OS == CISST_LINUX_XENOMAI)
   // Xenomai stuff
   mlockall(MCL_CURRENT | MCL_FUTURE);
   RT_TASK task;
   rt_task_shadow( &task, "CANServer", 80, 0);
+#endif
 
   cmnLogger::SetMask( CMN_LOG_ALLOW_ALL );
   cmnLogger::SetMaskFunction( CMN_LOG_ALLOW_ALL );
   cmnLogger::SetMaskDefaultLog( CMN_LOG_ALLOW_ALL );
 
   if( argc !=2 ){
-    std::cerr << "Usage: " << argv[0] << " rtcan[?]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << " can[?]" << std::endl;
     return -1;
   }
 
@@ -108,10 +113,17 @@ int main( int argc, char** argv ){
   taskManager = mtsManagerLocal::GetInstance();
 
   // The RTSocketCAN component
+#if (CISST_OS == CISST_LINUX_XENOMAI)
   mtsRTSocketCAN can( "CAN",
 		      argv[1],
 		      osaCANBus::RATE_1000,
 		      osaCANBus::LOOPBACK_ON );
+#else
+  mtsSocketCAN can( "CAN",
+		    argv[1],
+		    osaCANBus::RATE_1000,
+		    osaCANBus::LOOPBACK_ON );
+#endif
   taskManager->AddComponent( &can );
   
   // A client
